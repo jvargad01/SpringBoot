@@ -1,0 +1,121 @@
+info:
+  component: Microservice todo a un controller de consumer Pokemon.
+
+management: 
+  endpoint:
+    shutdown:
+      enabled: true
+    metrics:
+      enabled: true
+  endpoints: 
+    web: 
+      base-path: /actuator
+      exposure:
+        include: '*'
+    health:
+      default:
+        enable: true
+        
+logging:
+  pattern:
+    level: '[%X{data}%thread][%X{X-B3-TraceId:-}]-%5p'
+  level:
+    org.springframework.web: INFO
+    org.springframework.web.servlet.DispatcherServlet: DEBUG
+    org.springframework.cloud.sleuth: DEBUG
+  
+feign:
+  okhttp:
+    enabled: true
+  httpclient:
+    enable: false 
+    disable-ssl-validation: true
+  ribbon:
+    IsSecure: true
+  client:
+    config:
+      default:
+        loggerLevel: basic
+
+hystrix:
+  command:
+    default:
+      execution: 
+        isolation:
+          thered:
+            timeoutInMilliseconds: 120000
+            
+spring:
+  data: 
+    mongodb:
+      database:
+      host:
+      username:
+      authentication-database:
+      key-store:
+      key-store-password:
+      
+solace:
+  session-config:
+    host:
+    username:
+    password:
+    vpn:
+    ssl-trust-store:
+    ssl-trust-store-format:
+    authentication-scheme:
+  queue-config:
+    queue-name:
+      endpoint-alias:
+      solace-name-queue:     
+      
+messaging: 
+  header:
+    errorMessage: Invalid or missing heards
+    invalidMessage: header is not valid
+    missingMessage: header is missing
+    unsupportedMessage: unsupported Media Type
+    name:
+      clientId: client_id
+      authorization: Authorization 
+      accept: Accept
+      uuid: uuid
+      acceptLanguage: Accept-Language
+      contentType: content-Type 
+      channelId: ChannelId
+      sid: sid
+      businessCode: businessCode
+      countryCode: countryCode
+  contact:
+    email: xxx@xxx.com
+    page: https://www.xxx.com
+    enterprise: ScriptCreativo
+  config:
+    resource-handler: swagger-ui.html
+    resource-classpath-resources: classpath:/META-INF/resources/
+    resource-wabjar: /webjars/**
+    resource-classpath-webjars: classpath:/META-INF/resources/webjars
+  
+api:
+  retrive: &retrive '/api/v1/domain/services/pokemon'
+      
+endpoints:
+  list:
+    -
+     name: retrivePokemon
+     path: *retrive
+     headers: accept, uuid, content-type, channelid, sid
+
+pokemon:
+  config:
+    name: https://pokeapi.co
+    url-retive: /api/v2/ability/ 
+
+
+time-utild: 
+  mexico-city-zone-id: America/Mexico_City
+  
+message:
+  timed:
+    controller:
+      main: com.jv.example.controller.Controller

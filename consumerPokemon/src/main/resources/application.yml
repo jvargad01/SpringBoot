@@ -1,0 +1,13 @@
+---
+spring:
+  application:
+    name: ExampleController
+  config:
+    name: ${spring.application.name}
+  cloud: 
+    config: 
+      uri: ${vcap.services.configServerURLMX.credentials.uri}
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${vcap.services.credentials.uri}

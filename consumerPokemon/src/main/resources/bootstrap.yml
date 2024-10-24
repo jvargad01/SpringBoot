@@ -1,0 +1,8 @@
+---
+spring:
+  main:
+    allow-bean-definitions-overriding: true
+  application:
+    name: consumerPokemon
+  config:
+    name: ${spring.application.name} 

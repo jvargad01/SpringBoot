@@ -1,0 +1,92 @@
+info:
+  component: the service is for exmple to API.
+  
+server:
+  port: 8181
+  
+eureka:
+  client:
+    registryFetchIntervalSeconds: 5
+    serviceUrl:
+      defaultZone: hhtp://user:password@localhost:8081
+    registerWithEureka: false
+  
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 120000
+            
+feing:
+  client:
+    config: 
+      default:
+        loggerLevel: FULL
+
+management:
+  endpoint:
+    shutdown:
+      enabled: true
+    metrics:
+      enabled: true
+  endpoints:  
+    web:
+      base-path: /actuator
+      exposure:
+        include: '*'
+  health:
+    default:
+      enabled: true  
+      
+logging: 
+  pattern: 
+    level: '[%X{data}%thread] [%X{X-B3-TraceId:-}] - %5p'
+  level:
+    org.springframework.web: INFO
+    org.springframework.web.servlet.DispatcherServlet: INFO
+    org.springframework.cloud.sleuth: DEBUG
+    com.api.example.ApiExampleApplication: INFO
+    
+config: 
+  resource-handler: swagger-ui.html
+  resource-classpath-resources: classpath:/META-INF/resource/
+  resource-webjar: /webjar/**
+  resource-classpath-webjar: classpath:/META-INF/resources/webjar/
+
+header:
+  errorMessege: Invalid or misssing headers
+  invalidMessage: header is not valid
+  missingMessage: header is missing or null
+  unsupportedMessage: unsupported Media Type
+  countryCode: 
+    name: contryCode
+  authorization:
+    name: Authorization
+  businessCode:
+    name: BusinessCode
+  acceptLanguage:
+    name: AcceptLanguage
+  uuid: 
+    name: uuid
+  clientId:
+    name: client_id
+  channelId:    
+    name: ChannelId
+  accept:
+    name: Accept
+  contentType:
+    name: Content-type
+         
+  
+api:
+  retive: &retrieve 'api/v1/domain/service/example/retrive'
+  
+endpoints:
+  list:
+    -
+     name: retrieve
+     path: *retrieve
+     headers: Accept, uuid, Content-type, sid
+         
